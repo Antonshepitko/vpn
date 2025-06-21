@@ -14,28 +14,23 @@ spec:
         app: warp-proxy
     spec:
       containers:
-        - name: wireguard
-          image: ghcr.io/fscarmen/warp-for-docker
-          env:
-            - name: WARP_CONF
-              value: /etc/wireguard/wgcf-profile.conf
-          securityContext:
-            capabilities:
-              add: ["NET_ADMIN"]
-          volumeMounts:
-            - name: wgcf
-              mountPath: /etc/wireguard
-        - name: dante
-          image: looterz/dante
-          ports:
-            - containerPort: 1080
-          volumeMounts:
-            - name: dante-config
-              mountPath: /etc/dante
+      - name: wireguard-go
+        image: masipcat/wireguard-go
+        env:
+          - name: WG_CONFIG
+            value: /etc/wireguard/wgcf-profile.conf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+          - name: wgcf
+            mountPath: /etc/wireguard
+      - name: socks5
+        image: serjs/go-socks5-proxy
+        args: ["-p", "1080"]
+        ports:
+          - containerPort: 1080
       volumes:
         - name: wgcf
           secret:
             secretName: warp-wg
-        - name: dante-config
-          configMap:
-            name: dante-config
