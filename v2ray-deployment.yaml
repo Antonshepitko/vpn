@@ -1,30 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: v2ray-warp
+  name: v2ray
   namespace: vpn
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: v2ray-warp
+      app: v2ray
   template:
     metadata:
       labels:
-        app: v2ray-warp
+        app: v2ray
     spec:
       containers:
-      - name: warp
-        image: masipcat/wireguard-go
-        command: ["/wireguard-go"]
-        args: ["wgcf-profile.conf"]
-        securityContext:
-          capabilities:
-            add: ["NET_ADMIN"]
-        volumeMounts:
-        - name: wgcf
-          mountPath: /etc/wireguard
-        workingDir: /etc/wireguard
       - name: v2ray
         image: v2fly/v2fly-core
         args: ["run", "-c", "/etc/v2ray/config.json"]
@@ -42,6 +31,3 @@ spec:
       - name: certs
         secret:
           secretName: v2ray-tls-secret
-      - name: wgcf
-        secret:
-          secretName: warp-wg
