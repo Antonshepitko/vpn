@@ -13,7 +13,7 @@ data:
           "settings": {
             "clients": [
               {
-                "id": "ВАШ_UUID",    // Сюда вставить свой UUID!
+                "id": "0659bc95-ff50-45da-b681-2ff7c3c69ceb",    // Сюда вставить свой UUID!
                 "flow": "xtls-rprx-vision"
               }
             ],
