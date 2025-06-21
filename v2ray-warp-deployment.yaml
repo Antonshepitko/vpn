@@ -15,13 +15,16 @@ spec:
     spec:
       containers:
       - name: warp
-        image: fscarmen/warp
+        image: masipcat/wireguard-go
+        command: ["/wireguard-go"]
+        args: ["wgcf-profile.conf"]
         securityContext:
           capabilities:
             add: ["NET_ADMIN"]
         volumeMounts:
         - name: wgcf
           mountPath: /etc/wireguard
+        workingDir: /etc/wireguard
       - name: v2ray
         image: v2fly/v2fly-core
         args: ["run", "-c", "/etc/v2ray/config.json"]
