@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: warp
-        image: linuxserver/wireguard
+        image: masipcat/wireguard-go
+        args: ["wgcf-profile.conf"]
         securityContext:
           capabilities:
             add: ["NET_ADMIN"]
