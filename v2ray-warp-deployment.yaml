@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: warp
-        image: ghcr.io/goofball222/wireguard:latest
+        image: linuxserver/wireguard
         securityContext:
           capabilities:
             add: ["NET_ADMIN"]
